@@ -133,3 +133,28 @@ humansz  1K
 '
 FILTER='sed "s/^fd       [0-9][0-9]*/fd       42/"'
 run_test
+
+NAME='multigrep'
+BROKEN=
+FILE=malloc://1024
+ARGS=
+CMDS='
+i~size~?
+i~nosuchstring~?
+i~^f~or~?
+i~?&f,or
+i~or~true
+i~&or,true
+i~or~ny[0]
+i~&or,ny[0]
+'
+EXPECT='1
+0
+1
+1
+iorw     true
+iorw     true
+format
+format
+'
+run_test
